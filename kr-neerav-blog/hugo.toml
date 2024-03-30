@@ -1,0 +1,4 @@
+baseURL = 'https://kr-neerav.github.io/'
+languageCode = 'en-us'
+title = 'Observations in Workplace'
+theme= "whiteplain"

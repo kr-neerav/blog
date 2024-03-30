@@ -1,0 +1,10 @@
+[submodule "kr-neerav-blog/themes/themes/whiteplain"]
+	path = kr-neerav-blog/themes/themes/whiteplain
+	url = https://github.com/taikii/whiteplain.git
+[submodule "kr-neerav-blog/themes/whiteplain"]
+	path = kr-neerav-blog/themes/whiteplain
+	url = https://github.com/taikii/whiteplain.git
+[submodule "kr-neerav-blog/public"]
+	path = kr-neerav-blog/public
+	url = https://github.com/kr-neerav/kr-neerav.github.io.git
+	branch = main
