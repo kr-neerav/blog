@@ -25,3 +25,5 @@ categories = ["General"]
 * you adopt craftsman mindset first and then passion follows
 * the traits that define great work are rare and valuable. By economic theory of supply and demand to get the job you must offer something valueable in return. This valuable things are the skills you develop a.k.a career capital. The craftsman mindset of becoming so good that they can't ignore you is well suited to developer career capital.
 * good job has 3 traits 1) creativity: lets you be creative 2) impact: lets you have a big impact 3) control: lets you be in control of work, timing, life.
+### Rule 3: Turn down a promotion
+* 
