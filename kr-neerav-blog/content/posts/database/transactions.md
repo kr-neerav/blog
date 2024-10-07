@@ -1,7 +1,7 @@
 +++
 title = 'Transactions'
 date = 2024-08-19T05:23:50-07:00
-draft = true
+draft = false
 +++
 ## Transaction Concept
 * often a collection of operations on a database appears as a single unit from the point of view of the database user. this collection is called a transaction and either all operations must succeed or all must fail.

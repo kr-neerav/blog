@@ -1,7 +1,7 @@
 +++
 title = 'Storage File Structure'
 date = 2024-08-10T09:32:37-07:00
-draft = true
+draft = false
 +++
 
 ## Overview of Physical Storage Media

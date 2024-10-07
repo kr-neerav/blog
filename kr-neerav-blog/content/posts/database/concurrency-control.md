@@ -1,7 +1,7 @@
 +++
 title = 'Concurrency Control'
 date = 2024-08-20T18:13:28-07:00
-draft = true
+draft = false
 +++
 ## Lock based protocols
 * when one transaction is accessing a data item it cannot be updated by another transaciton. This is implemented by locks.

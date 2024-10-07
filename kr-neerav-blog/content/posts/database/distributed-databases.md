@@ -1,7 +1,7 @@
 +++
 title = 'Distributed Databases'
 date = 2024-07-30T21:46:36-07:00
-draft = true
+draft = false
 +++
 
 ## Notes

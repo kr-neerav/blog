@@ -1,7 +1,7 @@
 +++
 title = 'Query Optimization'
 date = 2024-08-18T06:16:28-07:00
-draft = true
+draft = false
 +++
 ## Overview
 * There are 3 steps to come up with alternate evaluation plans

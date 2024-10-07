@@ -1,7 +1,7 @@
 +++
 title = 'Query Processing'
 date = 2024-08-17T13:52:14-07:00
-draft = true
+draft = false
 +++
 ## Overview
 * There are 3 steps involved in query processing 1) parsing and translation 2) Optimization 3) Evaluation

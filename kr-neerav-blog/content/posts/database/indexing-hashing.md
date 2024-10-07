@@ -1,7 +1,7 @@
 +++
 title = 'Indexing Hashing'
 date = 2024-08-11T10:52:11-07:00
-draft = true
+draft = false
 +++
 * In most cases a query only needs a fraction of tuples. In those cases additional data structures are created to directly reach those records instead of scanning the entire table.
 ## Basic Concepts

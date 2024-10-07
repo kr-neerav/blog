@@ -1,7 +1,7 @@
 +++
 title = 'Parallel Databases'
 date = 2024-07-26T04:16:16-07:00
-draft = true
+draft = false
 +++
 
 ## Notes

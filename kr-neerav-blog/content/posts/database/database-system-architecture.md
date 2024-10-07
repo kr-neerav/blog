@@ -1,7 +1,7 @@
 +++
 title = 'Database System Architecture'
 date = 2024-08-24T20:15:15-07:00
-draft = true
+draft = false
 +++
 ## Server System Architecture
 * they can be classified as transaction servers and data servers.

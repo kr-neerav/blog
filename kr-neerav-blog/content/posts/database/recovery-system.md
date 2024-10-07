@@ -1,7 +1,7 @@
 +++
 title = 'Recovery System'
 date = 2024-08-24T10:02:13-07:00
-draft = true
+draft = false
 +++
 ## Failure Classification
 * Transaction Failure: errors that cause at transaction to fail 1) logical error like bad input, data not found etc 2) system error like deadlock.
