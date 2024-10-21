@@ -81,6 +81,22 @@ draft = true
 ### Incentives
 * how to make the costs of requests visible to customers and allocated to them. a client might find it cheaper to not clean up obsolete data or delete scheduled report because they only see the costs to their own time of making the change and not hte accuring costs of these useless obligations that you system is honoring on their behalf.
 * getting billing model right is complex. too simple a model and you can miss aligning your clients to one or more of your key cost drivers and too complex then you will have client confusion and frustration. hence pilot simple and iterate. 
+## Caching
+* caching immutable data is simpler than caching mutable data as you don't have to worry if you have the latest data or not. a common technique when caching mutable data is to have an mutable pointer to an immutable business object, like a snapshot e.g. latest deployment points to a version set that is immutable.
+* caching within a request scope provide consistency e.g. a price fetched once if cached all other lookups for price will see a consistent value even if the underlying price has changed.
+* Cache key selection determines correctness and effectiveness. under specifying a cache key can return incorrect results e.g. not including language in url as key can return a page in incorect language. over specifying cache key can result in reduced cache hit rate.
+* Service owners assume cache reads are free. however they should treat is as a remote service call as when cache is down or not hit, it leads to expensive call to service.
+* avoid caching fan out i.e. a server requests data from multiple cache partitions as there is a temporary network jam when data is returned from caches (rather quickly). also this makes the service less partition tolerant as the unavailability of single cache partition impacts the availability of the service.
+* negative cache is when cache contain special markers that indicate absence of data. this is done to protect the downstream services when the client requests something that does not exist. These might have shorter time to live.
+* a cache should remove immutable item when cache is full or passed its TTL which is usally high. the TTL is put just in case the entry was not calculated correctly the first time. The same is true for mutable data but the TTL is usually set by data provider who understand the business best.
+* Operators of services must be able to remove item from cache if needed, to ensure corrupted, illegal data does not proliferate.
+* use cache hit rate to estimate how much less work your fleet is doing to calcualte the return on investment in cache.
+* common cache replacement policy is least recently used and there are other algorithms as well. build a simple simulator to reply your logs and determine whether you are using the correct cache replacement.
+* a cache hit closer to the customer will save more work compared to cache hit on the leaf. however closer to the customer data tends to be more specific like personalized for which hit rates are much lower. caches in the middle of the soa provide most value.
+* caches can be local or remote. local cache can be in memory L0, in memory off heap L0.5, separate process L1. In memory caches reduce serialization costs. Local caches in separate process can reduce GC pauses. A remove shared cache L2 allows fleet to cache a much larger dataset and has better consistency. The order of lookup is L1 -> L2 -> service. On its return it updates the caches as well.
+* caches need to be properly sized. a smaller cache will have lower hit rate. to right size monitor the reasons for cache eviction if its due to expiring TTL then cache is sized right, if its due to cache being full then cache size needs to be increased.
+* use speculative invalidation periodically i.e. force a cache miss by skipping cache. this will still update the cache thus ensuring frequently used entries are upto date in cache.
+
 
 ## Main sections
 * how to defing a goal for cost efficiency
