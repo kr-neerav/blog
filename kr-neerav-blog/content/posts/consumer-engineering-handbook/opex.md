@@ -77,4 +77,25 @@ draft = true
 * focus on mitigating the impact first and update the initial analysis in the ticket when you dial in.
 * escalate or page others to help resolve issue quickly that is the goal and not to do it on your own.
 * focus on OpEx is really about trying to understand what is driving our tickets and pulling engineers away from building features. the way to do it is to get to root cause and fix that. Else you will continue to receive such issues.
+## Deployment Management
+* for services deployment is a release of software across multiple stages that span dev, test and prod environments.
+* goal of deployment 1) changes should go out safely 2) changes should go out quickly 3) changes should go out automatically
+* keep changes small and deploy periodically. as much as possible break features into smaller tasks that can be released independency. 
+* build up automated deployment regresstion test suite by release new automated tests with your changes.
+* deploy changes gratually in production to minimize risk, limit blast radius
+* bias towards quick automated rollback. if you have to do an manual deployment use an MCM.
+### Deploy in Stages
+* onebox: exposes a small fration of users to new changes
+* pipeline stages: usually 5 devo, pre-prod, one box, one AZ, remaining AZs. another practice is to break remainining AZs into stages for each produciton region. for each production stage have a one box to ensure you monitor changes before release to the entire stage.
+* setup your service in 3 AZs, 2 to handle the peak customer traffic for the day and 1 for failover
+* deploy infrastructure through scripts so its easy to create and destroy. do not store state in lambda, do not rely on manual configuration changes via console, CLI. use automated scripts that are tested and code reviewed to execute deployments and infrastructure changes.
+* beaware of database changes. they are risks to understand the rollback strategy.
+### Rollbacks
+* having a tested process to rollback changes reduces the risk of deployment
+* a rollback should be the first option when encountering problems.
+* create a metric based criterial to initiate rollback
+* routinely test rollbacks as this is the first approach used when encountering problems.
+### Manual Deployments
+* reasons for manual deployments 1) coordinating changes across teams 2) performing actions which can't be automated 3) performing actions that will only be executed one time 4) starting from scratch when you have no deployment process.
+* use change management tool to define, review and schedule manual/scripted changes. it prevents deployment errors by letting team model the deployment workflow and review it. it enables tracking/documentation for future use, debugging and testing.
 * 
