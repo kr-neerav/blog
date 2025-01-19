@@ -42,4 +42,26 @@ draft = true
 * with CI/CD its become harder for people to understand the shape of the system. the faster we go the more we need ubiquitous, high quality telemetry that describes what is happening and why.
 * operators need a way to cut through the noise so they can find the signal. there is simply too much data to store and most of the data is probably not very interesting.
 * standards based approaches have many benefits. maintainability , adopting an open format means developers have increased training opportunities. open standards are also future proof.
+## Ch 08: Designing Telemetry Pipelines
+* plans are useless, but planning is indispensable
+* collecting and processing telemetry is a high throughput operation.
+* when telemetry is dropped you lose observability, hence operators of the system need to understand how to handle traffic spikes and changes in application behavior.
+* local collector
+    * host metrics can be difficult to collect effectively from the application so observing the host machine is the most common reason to have a local collector.
+    * environment resources are attributes are critical for describing where telemetry originatees. These requires system/API calls to collect and can impact startup times of the application. delegating this to the local collectors frees up application from collecting this information and improves startup time.
+    * telemetry is usually exported in batches. if application crashes any telemetry not yet exported will be lost. since telemetry data is most important to investigate a crash losing it is not good. the osolution is to export in small batch sizes and window sizes, so it can be evaculated quickly from the application. the local collector can batch these further before exporting it for remote destination.
+    * most of telemetry management i.e manage where data is going, format, processing is not specific to individual application and needs to be normalized across all services. local collector helps manage this. mixing telemetry config with app config can be messy. any change in telemetry config will require app restart and also make coordinating changes across fleet more challenging.
+* collector pools
+    * a set of collectors each running on its own machine that uses a load balancer to distribute traffic.
+    * you can use load balancing to handle backpressure, where producer begins to send data faster than consumer can consume. distributing this load across multiple collectors is a form of back pressure.
+    * applications don't produce telemetry in steady stream. deprending on traffic levels sometimes applications begin emitting high volumns of telemetry.
+    * a collector pool lets you add additional memory to the telemetry pipeline. the load balancer helps smooth out the spikes caused by burst of traffic. as telemetry data is stateless its easy to manage and scale the collector pool
+    * processing telemetry consumes resources. holding telemetry requires memory and transforming telemetry requires CPU cycles. when a local collector is using these resources they are no longer available to the application. local collector should focus on evacuating telemetry from application and gathering host metrics. any other type of processing should be done in collector pool.
+    * collector pools are completely independent so infrastructure team can manage them without needing to coordinate deployments with applications.
+### Pipeline operations
+* using a pipeline of collectors to apply changes to telemetry data and protocols is a key part of making adjustments to your observability system without creating downtime or observability blackouts.
+* filtering is a process of completely removing specific types of data on a set of rules. samples is the process of identifying statistically representative subset of data and removing the rest.
+* filtering is easy sampling is dangerous
+* when and how to sample is must more difficult question to answer. avoid sampling unless egress cost of telemetry is very high.
+* transforming telmetry data  i.e. modifying attributes, remove sensitive information, create derived attributes, add new attributes.
 * 
