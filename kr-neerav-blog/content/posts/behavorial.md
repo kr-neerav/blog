@@ -35,3 +35,58 @@ Situation: An engineer was assigned this project and they were working with thei
 Action: I explained to them before we propose any tooling we should be able to describe in 1 page what is the root cause of lack of data quality monitoring in the org and if tooling is the gap we should provide evidence for that. I reviewed the interview notes from other teams and they were focused on discussion about what capabilities teams want for data quality monitoring. I setup meeting with 2 of the teams again and led the discussion so they could understand what kind of information we collect to diagnose the current situation.
 Result: They were able to collect meaningful insights from the rest of the teams. Together we identified lack of data quality monitoring in the org was due to lack of understanding of what should one monitor as part of data quality. We created the proposal that defines what kind of data quality issues are, what are the different sources to understand what is critical to monitor, what are the different approaches to monitor for such issues. In the end we leveraged existing tooling instead of building our own. We completed monitoring on 35 datasets owned by us and reviewed this proposal with other teams in the org showing evidence of this strategy being successful. Currently have helped 1 more team in the org to improve their data quality  monitoring. We are still working with other teams to improve their data quality monitoring.
 Do differently: Customer interviews I should have been part of hte first round of intervies so we did not have to go through them again. At the beginning of the initiative set the expectations and been more explicit on how they should draft the proposal, template they should use. 
+
+## Bias for Action
+### Calculated risk where speed was critical
+Customer Problem: One of our datasets which was considered the oxygen for talent management analytics had not had a change in 4 years. When we did introduce a change we released a bug that introduced a data quality issue. The customer's were unable to run their analytics, sone of them relied on this data to implement Fine Grain Access Control on their data.
+Situation: We identified the root cause as the bug and decided to rollback to the previous state. Then we realized that we didn't have backup of the previous data. The engineer had executed a backfill in production that had overridden all checkpoint files, staging table and final output. So we did not have any data to restore it from. So we have a situation to restore data quickly but don't have a clear SOP to do it.
+Action: I setup a small working group to help restore this. Since we did not have an SOP for backfill I created one on the fly and peer reviewed with 1 senior engineer and 1 other engineer. I created validation scripts to validate each step. We created small data testing script for each stage of the pipeline to ensure we catch any issues with restore early.
+Result: Restored data in 2 days and customers were unblocked. The validating scripts we created helped us catch 1 issue during the restore.
+Do differently: we could have assigned an individual to work with the platform team to restore the last version of the final output. that would have mitigated the customer impact while we fixed the issue and make the pipeline ready for next run.
+
+### Decision without consulting your manager
+Customer Problem: Create child goals for leadership to review.
+Situation: We support science and analytics customers and some of our goals work back from their goals. One of the goals was experimentation. We had clarity on some of their work like streamling experimentation analysis that we created goals on while for other goals like creating north star metrics for measuresment there was ambiguity on ownership, scope of work.
+Action: i pushed back not scoping out work for the north star metrics till we have more clarity. they said that last year we had a similar goal that was ambiguous but we created a goal. I did acknowledge that but mentioned it is hard to create a goal unless we have a clear understanding of impact, why its important and how it will be measured.
+Result: didn't create goal and later on discussed with manager and they aligned. had more followups with the science team and helped them define ownership for those metrics with the data engineering team that support that product.
+Do differently: nothing different but there were good lessons here, once you have a clear understanding of what is required to set goals it is easier to have tough discussions on why we are not doing it
+
+### Tight deadline and didn't have time to consider all options
+Customer problem: launching a chatbot for Amazon employees to ask compensation related questions. we owned creating the Retreival Augmented Generation Service to provide the LLM amazon specific compensation data.
+Situation: We did a PoC on 3 Vector databases Opensearch serverless, Amazon Kendra and Amazon RDS with vector plugin. We finalized OSS due to its low cost of ownership  for our use case. During implementation Amazon Bedrock accounced an integrated RAG service Knowledge base. We had to make a decision on continuing our path or moving to knowledge base.
+Action: did a quick 1 day document read of Knowledge base. Realized there were still open questions related to support for text + vector searches, latency and TPS limits. it was hard to finalize this without doing an additional PoC. Decided to move forward with OSS and as part of P1 release evaluate Knowledge base.
+Result: successful launch of the chatbot on the agreed upon timeline. Timeline was imporant as Compensation has annual peaks in Q1. If we miss this peak then the next opportunity will be next year.
+Do differently: connecting with the team that launch Knowledge base could have helped answer some of our questions. but there was also more work on revisiting design for our intefaces to publish data to RAG.
+
+
+## Customer Obsession
+### difficult interaction with a customer
+### customer making unresonable request
+Customer problem: Customer were at risk to deliver on a goal with Q2 timeline.
+Situation: Customer had a Q2 timeline for a goal for which they required support to enhance the feature engineering pipeline in Q1. This was a late addition to their goal so we did not plan out any work on this in Q1. This was about 4 -6 weeks of effort.
+Action: First tried to understand the rationale for Jan timeline by customers. it turns out this was to provide them buffer to validate changes at their end. Negotiated and agreed upon mid March timeline. Then deep dived into the request for 280 features and found 75% of them were pivot values for different time periods. Negotiated in the short term for us to created granular features and then to own pivoting these on the fly. They agreed and reduced scope of work to 4 weeks.
+Result: Prioritize the work as agreed upon. Customers were unblocked and were able to validate the model using new features before launch.
+Do differently: In my opinion other work that we had prioritized for Q1 was more important than this, but there was a possibility to review that with the manager, if scenario had changed since we had created Q1 roadmap.
+
+### asked for customer feedback
+Customer problem: confusion on ownership between us and data infrastructure team. when should customers reach out to which team.
+Situation: We were the sole data team for science and analytics customers. after reorg we had another team that was branded as data infrastructure team. The teams didn't have clear lines of ownership of what use cases each team should be solving and customers were confused. We heard this feedback in our VoC meetings and from our leaders as well. 
+Action: Created a 2 page proposal dilineating ownership between the 2 teams based on use cases. reviewed this proposal with both the teams and after agreement shared with with leaders and customers.
+Result: no confusion with customers or leaders as we stopped hearing any anecdotes moving forward.
+Do differently: could have been proactive. This confusion lasted for good 6 months before i wrote the proposal.
+details of proposal
+    * application sadie and analytics us. science had mixed use cases, so we divided them further.
+    * batch and online models using feature store to us. graph based ML models sadie.
+    * GenAI agents by sadie and RAG by us.
+
+## Are Right a lot
+### didn't have enough data to make the right decision
+
+
+### difficult decision with input from different stakeholders
+Customer Problem: standardize the customer experience with access baseline across 8+ teams
+Situation: We were execute an org level access baseline for the first time. As part of this we wanted to standardize the customer experience across 8+ teams and 1000s of customers. To achieve that we had to create a standard access request template and access review SOP to be used by all teams. The teams have used their own templates till now, which were effective to some extend but had gaps. The process to grant access was also independently defined by each team and had to be standardized.
+Action: Reviewed existing templates and SOP to create a universal template that used existing best practices and created new standard ones to enable easier audit of baseline data, understanding of customer use cases. After reviewing with the teams, reviewed with teh principal engineers in the org and finally with a sample of customers.
+Result: Overall reduced the number of followups. Were able to execute baseline across 8 teams in 10 weeks. Due to standardized request template was able to summarize the use cases of data access to leaders.
+Do differently: use forms instead of ticket as customers often leave some fields blank. ALso summarizing 200+ use cases with LLMs was not effective and had to complement it with manual analysis.
+
